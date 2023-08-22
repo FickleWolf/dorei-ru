@@ -1,0 +1,166 @@
+html, body {
+    font-family: 'ヒラギノ明朝 Pro W3', 'Hiragino Mincho Pro', '游明朝','Yu Mincho', '游明朝体', 'YuMincho','ＭＳ Ｐ明朝', 'MS PMincho', serif;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #7dd3fc;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+:root[data-theme="light"] {
+    --c-on-primary: #625b71;
+    /* ライトテーマで適用するプロパティ値 */
+    --c-primary: #6750a4;
+}
+
+:root[data-theme="dark"] {
+    --c-on-primary: #ccc2dc;
+    /* ダークテーマで適用するプロパティ値 */
+    --c-primary: #d0bcff;
+}
+
+body {
+    color: #262626;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+h1 {
+    color: #262626;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 48px;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+h2 {
+    color: #262626;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 40px;
+    margin-bottom: 16px;
+    margin-top: 0;
+}
+
+h3 {
+    color: #262626;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 36px;
+    margin-bottom: 16px;
+    margin-top: 0;
+}
+
+h4 {
+    color: #262626;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 32px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+h5 {
+    color: #262626;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 24px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+h6 {
+    color: #262626;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+p {
+    color: #262626;
+    font-size: 14px;
+    line-height: 24px;
+    margin-bottom: 16px;
+    margin-top: 0;
+}
+
+a {
+    text-decoration: underline;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    margin-inline-end: 0;
+    margin-inline-start: 0;
+    padding-inline-start: 0;
+}
+
+ul {
+    padding-left: 16px;
+}
+
+ol {
+    padding-left: 32px;
+}
+
+input,
+textarea {
+    font-family: 'ヒラギノ明朝 Pro W3', 'Hiragino Mincho Pro', '游明朝','Yu Mincho', '游明朝体', 'YuMincho','ＭＳ Ｐ明朝', 'MS PMincho', serif;
+}
+
+
+@media screen and (max-width: 991px) {
+    h1 {
+        font-size: 32px;
+        line-height: 40px;
+    }
+
+    h2 {
+        font-size: 28px;
+        line-height: 36px;
+    }
+
+    h3 {
+        font-size: 20px;
+        line-height: 32px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    h3 {
+        font-size: 18px;
+        line-height: 28px;
+    }
+
+    h4 {
+        font-size: 16px;
+        line-height: 28px;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    ul {
+        padding-left: 8px;
+    }
+
+    ol {
+        padding-left: 16px;
+    }
+
+    li {
+        font-size: 13px;
+    }
+}

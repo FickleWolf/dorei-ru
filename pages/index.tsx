@@ -1,9 +1,10 @@
-import Link from 'next/link'
+import React from "react";
+import HomePage from "./home";
 
-export default function IndexPage() {
-  return (
-    <div>
-      Hello World. <Link href="/about">About</Link>
-    </div>
-  )
+export default function Top() {
+    return (
+        <div >
+            <HomePage />
+        </div>
+    );
 }
