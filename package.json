@@ -24,7 +24,8 @@
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
-    "react-hook-form": "^7.45.4"
+    "react-hook-form": "^7.45.4",
+    "react-youtube": "^10.1.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.43",

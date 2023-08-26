@@ -1,45 +1,32 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import { PlatformSettingProvider } from "../lib/PlatformSetting";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faShirt,
-    faCouch,
-    faGamepad,
-    faRobot,
-    faSprayCanSparkles,
     faComputer,
-    faBaseballBatBall,
-    faCarSide,
-    faPaw,
     faUtensils,
-    faBottleDroplet,
     faToiletPaper,
-    faStopwatch,
-    faPenRuler,
-    faGlobe,
+    faRobot,
+    faGlobe
 } from "@fortawesome/free-solid-svg-icons";
 
 function MyApp({ Component, pageProps }: AppProps) {
     library.add(
         faShirt,
-        faCouch,
-        faGamepad,
-        faRobot,
-        faSprayCanSparkles,
         faComputer,
-        faBaseballBatBall,
-        faCarSide,
-        faPaw,
         faUtensils,
-        faBottleDroplet,
         faToiletPaper,
-        faStopwatch,
-        faPenRuler,
+        faRobot,
         faGlobe
     );
 
     return (
-        <Component {...pageProps} />
+        <>
+            <PlatformSettingProvider>
+                <Component {...pageProps} />
+            </PlatformSettingProvider>
+        </>
     );
 }
 

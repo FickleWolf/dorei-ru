@@ -1,9 +1,46 @@
+import React, { useContext, useRef, useEffect, useState } from "react";
 import styles from "../../styles/Home.module.css";
 import Image from "next/image";
+import initializeFirebaseClient from "../../lib/initFirebase";
+import { PlatformSettingContext } from "../../lib/PlatformSetting";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightToBracket,faBars,faBell } from "@fortawesome/free-solid-svg-icons";
+import { faRightToBracket, faBars, faBell } from "@fortawesome/free-solid-svg-icons";
+import {
+    getDoc,
+    doc,
+    serverTimestamp,
+    setDoc,
+    query,
+    collection,
+    where,
+    getDocs,
+    updateDoc,
+} from "firebase/firestore";
 
 export default function Header() {
+    const { auth, db } = initializeFirebaseClient();
+    const { platformSetting, setPlatformSetting } = useContext(PlatformSettingContext);
+
+    async function getPlatformSetting() {
+        if (platformSetting) return;
+        const platformSettingRef = doc(db, "platformSetting", "readOnly");
+        const platformSettingSnap = await getDoc(platformSettingRef);
+        if (platformSettingSnap.exists()) {
+            setPlatformSetting({
+                ...platformSettingSnap.data(),
+            });
+        }
+        else{
+            setPlatformSetting({
+                eventCategories:[]
+            });
+        }
+    }
+
+    useEffect(() => {
+        getPlatformSetting();
+    }, []);
+
     return (
         <div className={styles.header}>
             <div className={styles.header_container}>
