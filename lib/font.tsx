@@ -1,5 +1,5 @@
-import { NextFont } from "@next/font";
-import { RocknRoll_One } from "@next/font/google";
+import { NextFont } from "next/dist/compiled/@next/font";
+import { RocknRoll_One } from "next/font/google";
 
 const rocknRoll_One = RocknRoll_One({
     weight: ["400"],

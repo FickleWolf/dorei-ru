@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect, useState, use } from "react";
+import React, { useContext, useRef, useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
 import Loading from "../pages/components/loading";
