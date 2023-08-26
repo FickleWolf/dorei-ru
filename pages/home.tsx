@@ -61,7 +61,7 @@ export default function HomePage() {
         setDisplayEvents([
             ...newEvents
         ]);
-        setGenre(`${genre["name"]} 一覧`);
+        setGenre(`${genre["name"]}`);
     }
 
     useEffect(() => {
