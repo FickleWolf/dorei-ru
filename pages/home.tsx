@@ -48,7 +48,6 @@ export default function HomePage() {
                     ...event.data()
                 })
             );
-            console.log(_events);
             setSourceEvents(_events);
             setDisplayEvents(_events);
         });
@@ -73,7 +72,7 @@ export default function HomePage() {
         if (platformSetting && sourceEvents) {
             setIsLoad(false);
         }
-    }, [platformSetting]);
+    }, [platformSetting,sourceEvents]);
 
     return (
         <div className={`${styles.body} ${rocknRoll_One.className}`}>

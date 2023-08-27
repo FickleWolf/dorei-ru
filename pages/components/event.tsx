@@ -11,9 +11,9 @@ export default function Event(event: any) {
     function goEventPage(event: any) {
         router.push(
             {
-                pathname: "/event",
+                pathname: "/event_page",
                 query: {
-                    productID: event["id"],
+                    eventID: targetEvent["id"],
                 },
             },
             ""
@@ -89,7 +89,6 @@ export default function Event(event: any) {
                                 )}
                             </div> : null
                         }
-
                     </div>
                     <div className={styles.event_content}>
                         <div className={styles.event_content_participant}>

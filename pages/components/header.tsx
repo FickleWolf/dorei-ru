@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import styles from "../../styles/Home.module.css";
 import Image from "next/image";
 import initializeFirebaseClient from "../../lib/initFirebase";
@@ -18,6 +19,7 @@ import {
 } from "firebase/firestore";
 
 export default function Header() {
+    const router = useRouter();
     const { auth, db } = initializeFirebaseClient();
     const { platformSetting, setPlatformSetting } = useContext(PlatformSettingContext);
 
@@ -30,9 +32,9 @@ export default function Header() {
                 ...platformSettingSnap.data(),
             });
         }
-        else{
+        else {
             setPlatformSetting({
-                eventCategories:[]
+                eventCategories: []
             });
         }
     }
@@ -44,7 +46,10 @@ export default function Header() {
     return (
         <div className={styles.header}>
             <div className={styles.header_container}>
-                <div className={styles.header_wrapper}>
+                <div className={styles.header_wrapper}
+                    onClick={() => router.push({
+                        pathname: "/"
+                    })}>
                     <div>
                         <Image
                             alt="icon"
