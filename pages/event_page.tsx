@@ -38,10 +38,6 @@ export default function HomePage() {
             setTargetEvent(eventSanp.data());
 
             setIsLoad(false);
-            console.log({
-                id: eventSanp.id,
-                ...eventSanp.data()
-            });
         }
         else {
             alert("イベントが取得できませんでした。\nホーム画面に遷移します。");
