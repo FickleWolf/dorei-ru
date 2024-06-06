@@ -1,54 +1,43 @@
-import React, { useContext, useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { GetServerSideProps } from 'next';
 import Link from "next/link";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/Style.module.css";
 import Image from "next/image";
-import Loading from "../pages/components/loading";
-import font from "../lib/font";
-import initializeFirebaseClient from "../lib/initFirebase";
+import Loading from "../components/loading";
 import { useRouter } from "next/router";
-import Header from "../pages/components/header";
-import Footer from "../pages/components/footer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight, faInfinity } from "@fortawesome/free-solid-svg-icons";
-import {
-    doc,
-    getDoc
-} from "firebase/firestore";
+import Header from "../components/header";
+import Footer from "../components/footer";
 
-export default function HomePage() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const { eventID } = context.query;
+    const baseUrl = context ? `http://${context.req.headers.host}` : 'http://localhost:3000';
+    try {
+        const response = await fetch(`${baseUrl}/api/events/getEventById?eventID=${eventID}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch event data');
+        }
+        const eventData = await response.json();
+        return {
+            props: {
+                event: eventData,
+            },
+        };
+    } catch (err) {
+        return {
+            props: {
+                event: null,
+            },
+        };
+    }
+};
+
+export default function EventPage({ event }: { event: any }) {
     const router = useRouter();
-    const { rocknRoll_One } = font();
-    const { db } = initializeFirebaseClient();
-    const [targetEvent, setTargetEvent] = useState<any | undefined>(undefined);
-    const [displayImg, setDisplayImg] = useState<string | undefined>(undefined);
+    const [targetEvent, setTargetEvent] = useState<any | null>(null);
+    const [displayImg, setDisplayImg] = useState<string | undefined>("");
     const [isLoad, setIsLoad] = useState<boolean>(true);
 
-    async function getEvent(eventID: string) {
-        const eventsRef = doc(db, "events", eventID);
-        const eventSanp = await getDoc(eventsRef);
-        if (eventSanp.exists()) {
-            setTargetEvent({
-                id: eventSanp.id,
-                ...eventSanp.data()
-            });
-            //eventのトップ画像を表示
-            eventSanp.data()["images"] && eventSanp.data()["images"].length ?
-                setDisplayImg(eventSanp.data()["images"][0])
-                : setDisplayImg("");
-            setTargetEvent(eventSanp.data());
-
-            setIsLoad(false);
-        }
-        else {
-            alert("イベントが取得できませんでした。\nホーム画面に遷移します。");
-            router.push({
-                pathname: "/"
-            });
-            return;
-        }
-    }
-
-    function unixToStoring(unix: number) {
+    function formatUnixTime(unix: number) {
         const dateTime = new Date(unix * 1000);
         return (`${dateTime.getFullYear()
             }年${dateTime.getMonth() + 1
@@ -59,20 +48,19 @@ export default function HomePage() {
     }
 
     useEffect(() => {
-        const eventID = router.query.eventID as string
-        if (eventID != undefined && targetEvent == undefined) {
-            if (eventID == "") {
-                router.push({
-                    pathname: "/"
-                });
-                return;
-            }
-            getEvent(eventID);
+        if (!event) {
+            alert("イベントが取得できませんでした。");
+            router.push("/");
+            return;
         }
-    }, [router]);
+        if (event.images && event.images.length) setDisplayImg(event.images[0]);
+        setTargetEvent(event);
+        setIsLoad(false);
+    }, [event]);
+
 
     return (
-        <div className={`${styles.body} ${rocknRoll_One.className}`}>
+        <div className={styles.body}>
             {isLoad ? <Loading /> : null}
             <Header />
             <div className={styles.container}>
@@ -149,7 +137,7 @@ export default function HomePage() {
                                             終了日時
                                         </div>
                                         <div className={styles.event_content_item_text_red}>
-                                            {unixToStoring(Number(targetEvent["endAt"]["seconds"]))}
+                                            {formatUnixTime(Number(targetEvent["endAt"]["seconds"]))}
                                         </div>
                                     </div>
                                     <div className={styles.hero_event_content_item}>
@@ -157,7 +145,7 @@ export default function HomePage() {
                                             公式YouTube 生放送日時
                                         </div>
                                         <div className={styles.event_content_item_text_red}>
-                                            {`${unixToStoring(Number(targetEvent["lotteryAt"]["seconds"]))}～`}
+                                            {`${formatUnixTime(Number(targetEvent["lotteryAt"]["seconds"]))}～`}
                                         </div>
                                     </div>
                                     <div className={styles.hero_event_content_item}>

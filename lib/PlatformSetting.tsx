@@ -13,12 +13,13 @@ const PlatformSettingContext = createContext<PlatformSettingContextProps>(
 
 interface Props {
     children: any;
+    initialPlatformSetting: any; 
 }
 
-const PlatformSettingProvider: React.FC<Props> = ({ children }) => {
+const PlatformSettingProvider: React.FC<Props> = ({ children, initialPlatformSetting }) => { 
     const [platformSetting, setPlatformSetting] = useState<
         any | null | undefined
-    >(undefined);
+    >(initialPlatformSetting); 
 
     const value: PlatformSettingContextProps = {
         platformSetting,

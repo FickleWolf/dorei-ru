@@ -1,4 +1,4 @@
-import styles from "../../styles/Home.module.css";
+import styles from "../styles/Style.module.css";
 import { useState, useEffect } from "react";
 import Image from 'next/image';
 import { useRouter } from "next/router";
@@ -8,19 +8,18 @@ export default function Event(event: any) {
     const [displayImg, setDisplayImg] = useState<string | undefined>(undefined);
     const [targetEvent, setTargetEvent] = useState<any | undefined>(undefined);
 
-    function goEventPage(event: any) {
+    function goEventPage() {
         router.push(
             {
                 pathname: "/event_page",
                 query: {
                     eventID: targetEvent["id"],
                 },
-            },
-            ""
+            }
         );
     }
 
-    function unixToStoring(unix: number) {
+    function formatUnixTime(unix: number) {
         const dateTime = new Date(unix * 1000);
         return (`${dateTime.getFullYear()
             }年${dateTime.getMonth() + 1
@@ -32,9 +31,7 @@ export default function Event(event: any) {
 
     useEffect(() => {
         if (targetEvent == undefined && displayImg == undefined) {
-            event["event"]["images"] && event["event"]["images"].length ?
-                setDisplayImg(event["event"]["images"][0])
-                : setDisplayImg("");
+            if (event["event"]["images"] && event["event"]["images"].length) setDisplayImg(event["event"]["images"][0])
             setTargetEvent(event["event"]);
         }
     }, []);
@@ -44,7 +41,7 @@ export default function Event(event: any) {
             {targetEvent ?
                 <div className={styles.event_item_inner}
                     onClick={() => {
-                        goEventPage(event);
+                        goEventPage();
                     }}>
                     <div className={styles.event_item_head}>
                         <div className={styles.event_item_tittle}>
@@ -101,7 +98,7 @@ export default function Event(event: any) {
                             {targetEvent["description"]}
                         </div>
                         <div className={styles.event_content_endAt}>
-                            {`終了日時：${unixToStoring(Number(targetEvent["endAt"]["seconds"]))}`}
+                            {`終了日時：${formatUnixTime(Number(targetEvent["endAt"]["seconds"]))}`}
                         </div>
                     </div>
                 </div> : null
