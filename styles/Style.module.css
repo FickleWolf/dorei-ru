@@ -261,13 +261,13 @@
     width: 100%;
 }
 
-.social_content > div {
+.social_content>div {
     height: 100%;
     position: relative;
     width: 100%;
 }
 
-.social_content > div > iframe {
+.social_content>div>iframe {
     height: 100%;
     position: absolute;
     right: 0;
@@ -579,7 +579,7 @@ ul.event_content_item_text {
     padding-left: 32px;
 }
 
-.event_content_item_text > li::marker {
+.event_content_item_text>li::marker {
     font-size: 5px;
 }
 
@@ -687,6 +687,10 @@ ul.event_content_item_text {
     width: 100%;
 }
 
+.drawer_menu_item:hover{
+    background-color: #000;
+}
+
 .drawer_menu_item_icon_block {
     align-items: center;
     display: flex;
@@ -711,6 +715,133 @@ ul.event_content_item_text {
     font-weight: 500;
     justify-content: center;
     line-height: 1em;
+}
+
+.login {
+    animation: LoginFadeIn .3s ease-out;
+    background-color: #F5F5F5;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1001;
+}
+
+.login_hidden {
+    animation: LoginFadeOut .3s ease-out;
+    background-color: #F5F5F5;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1001;
+}
+
+.login_content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 448px;
+    max-height: 500px;
+    height: auto;
+    row-gap: 20px;
+    padding: 10px;
+    justify-content: flex-start;
+}
+
+.login_header {
+    align-items: center;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.login_header_logo {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+
+.login_header_logo_text {
+    color: #dc395f;
+    font-size: 20px;
+    font-weight: 600;
+    word-spacing: 2px;
+}
+
+.login_header_close_icon {
+    cursor: pointer;
+    color: #dc395f;
+    width: 24px;
+    height: 24px;
+}
+
+.login_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+}
+
+.login_body_hero {
+    padding: 24px 0;
+}
+
+.login_button {
+    align-items: center;
+    background-color: #06C755;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    width: 220px;
+    height: 50px;
+    justify-content: space-around;
+    border: none;
+    transition: background-color .3s;
+    text-decoration:none;
+}
+
+.login_button:hover {
+    background-color: #06c75652;
+}
+
+.login_button_text {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.login_demo_button {
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.login_footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+    margin: 10px 0 16px;
+}
+
+.login_footer_social{
+    display: flex;
+    flex-direction: row;
+    gap: 16px 24px;
+}
+
+.login_footer_nav_social{
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
 }
 
 @keyframes loading {
@@ -744,6 +875,30 @@ ul.event_content_item_text {
     100% {
         opacity: 1;
         transform: translateX(calc(100vw + 320px));
+    }
+}
+
+@keyframes LoginFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes LoginFadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
     }
 }
 
@@ -968,7 +1123,7 @@ ul.event_content_item_text {
         row-gap: 24px;
     }
 
-    .event_content_item_text > li {
+    .event_content_item_text>li {
         font-size: 11px;
         letter-spacing: 1px;
     }
@@ -1037,12 +1192,13 @@ ul.event_content_item_text {
         justify-content: center;
         width: 25px;
     }
+
     @keyframes DrawerSlideOut {
         0% {
             opacity: 1;
             transform: translateX(100vw);
         }
-    
+
         100% {
             opacity: 1;
             transform: translateX(calc(100vw + 100vw));

@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import { AppProps } from 'next/app';
-import { PlatformSettingProvider } from "../lib/PlatformSetting";
+import { PlatformSettingProvider } from "../lib/provider/PlatformSettingProvider";
+import { AuthProvider } from "../lib/provider/AuthProvider";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import font from "../lib/font";
 import {
@@ -25,9 +26,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     return (
         <div className={defaultFont.className}>
-            <PlatformSettingProvider initialPlatformSetting={pageProps.platformSettings}>
-                <Component {...pageProps} />
-            </PlatformSettingProvider>
+            <AuthProvider>
+                <PlatformSettingProvider initialPlatformSetting={pageProps.platformSettings}>
+                    <Component {...pageProps} />
+                </PlatformSettingProvider>
+            </AuthProvider>
         </div>
     );
 }

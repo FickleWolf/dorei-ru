@@ -4,7 +4,7 @@ import { faTwitter, faLine, faYoutube } from "@fortawesome/free-brands-svg-icons
 
 export default function Footer() {
     return (
-        <div className={styles.footer}>
+        <footer className={styles.footer}>
             <div className={styles.footer_container}>
                 <div className={styles.footer_nav}>
                     <div className={styles.footer_nav_item}>
@@ -35,6 +35,6 @@ export default function Footer() {
                     © 2023 DoreiRu.com All rights reserved.
                 </div>
             </div>
-        </div>
+        </footer>
     );
 }

@@ -1,4 +1,6 @@
+import { useRouter } from "next/router";
 import styles from "../styles/Style.module.css";
+import initFirebase from "../lib/initFirebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faClockRotateLeft,
@@ -11,6 +13,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Drawer({ closeDrawer, closeDrawerFunc }: { closeDrawer: boolean, closeDrawerFunc: () => void }) {
+    const { auth } = initFirebase();
+    const router = useRouter();
+
+    function signOut() {
+        auth.signOut();
+        router.reload();
+    }
+
     return (
         <div className={!closeDrawer ? styles.drawer : styles.drawer_hidden}>
             <div className={styles.drawer_otehr}
@@ -83,7 +93,10 @@ export default function Drawer({ closeDrawer, closeDrawerFunc }: { closeDrawer: 
                         ヘルプ・よくある質問
                     </div>
                 </div>
-                <div className={styles.drawer_menu_item}>
+                <div className={styles.drawer_menu_item}
+                    onClick={() => {
+                        signOut();
+                    }}>
                     <div className={styles.drawer_menu_item_icon_block}>
                         <FontAwesomeIcon
                             icon={faRightFromBracket}

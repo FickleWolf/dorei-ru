@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "../styles/Style.module.css";
 import Image from "next/image";
 import Loading from "../components/loading";
-import { PlatformSettingContext } from '../lib/PlatformSetting';
+import { PlatformSettingContext } from '../lib/provider/PlatformSettingProvider';
 import Header from "../components/header";
 import Footer from "../components/footer";
 import Event from "../components/event";

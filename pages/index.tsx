@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import HomePage from "./home";
 import { GetServerSideProps } from 'next';
-import { PlatformSettingContext } from '../lib/PlatformSetting';
+import { PlatformSettingContext } from '../lib/provider/PlatformSettingProvider';
 import initializeFirebaseClient from '../lib/initFirebase';
 import { doc, getDoc } from 'firebase/firestore';
 
