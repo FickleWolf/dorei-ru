@@ -1,17 +1,7 @@
-import React, { useContext, useEffect } from "react";
-import HomePage from "./home";
 import { GetServerSideProps } from 'next';
-import { PlatformSettingContext } from '../lib/provider/PlatformSettingProvider';
-import initializeFirebaseClient from '../lib/initFirebase';
-import { doc, getDoc } from 'firebase/firestore';
+import HomePage from "./home";
 
-export default function Top({ platformSettings, eventsData }: { platformSettings: any, eventsData: any }) {
-    const { setPlatformSetting } = useContext(PlatformSettingContext);
-
-    useEffect(() => {
-        setPlatformSetting(platformSettings);
-    }, [platformSettings, setPlatformSetting]);
-
+export default function Top({ eventsData }: { eventsData: any }) {
     return (
         <div>
             <HomePage eventsData={eventsData} />
@@ -19,17 +9,11 @@ export default function Top({ platformSettings, eventsData }: { platformSettings
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     try {
-        const { db } = initializeFirebaseClient();
-        const platformSettingRef = doc(db, 'platformSetting', 'readOnly');
-        const platformSettingSnap = await getDoc(platformSettingRef);
-        const platformSettings = platformSettingSnap.exists()
-            ? platformSettingSnap.data()
-            : null;
-
         const baseUrl = req ? `http://${req.headers.host}` : 'http://localhost:3000';
         const response = await fetch(`${baseUrl}/api/events/getAllEvents`);
+
         if (!response.ok) {
             throw new Error('Failed to fetch events');
         }
@@ -37,15 +21,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
         return {
             props: {
-                platformSettings,
                 eventsData
             }
         };
     } catch (error) {
-        console.error('Error fetching platform settings or events:', error);
+        console.error('Error fetching events:', error);
         return {
             props: {
-                platformSettings: null,
                 eventsData: []
             }
         };

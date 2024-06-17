@@ -13,6 +13,7 @@ import {
     faCoins
 } from "@fortawesome/free-solid-svg-icons";
 
+
 export default function Header() {
     const router = useRouter();
     const { user, userData, loading } = useAuth();

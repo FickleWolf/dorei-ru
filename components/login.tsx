@@ -1,11 +1,31 @@
 import styles from "../styles/Style.module.css";
 import Image from "next/image";
 import LineLoginButton from "./lineLoginButton";
+import initFirebase from "../lib/initFirebase";
+import { useRouter } from "next/router";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownLeftAndUpRightToCenter } from "@fortawesome/free-solid-svg-icons";
 import { faTwitter, faLine, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { useState } from "react";
 
 export default function Login({ closeLogin, closeLoginFunc }: { closeLogin: boolean, closeLoginFunc: () => void }) {
+    const router = useRouter();
+    const { auth } = initFirebase();
+    const [mes, setMes] = useState<string>("");
+    const sleep = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+    const testLogIn = async () => {
+        try {
+            await signInWithEmailAndPassword(auth, "test@dorei-ru.com", "testtesttest");
+            router.reload();
+        } catch (error) {
+            setMes("サインイン時にエラーが発生しました。\n一定時間後にホームへ遷移します。");
+            await sleep(5000);
+            router.reload();
+        }
+    };
+
     return (
         <div className={!closeLogin ? styles.login : styles.login_hidden}>
             <div className={styles.login_content}>
@@ -38,7 +58,11 @@ export default function Login({ closeLogin, closeLoginFunc }: { closeLogin: bool
                         <LineLoginButton />
                     </div>
                     <div className={styles.login_body_hero}>
-                        <div className={styles.login_demo_button}>
+                        <div
+                            onClick={() => {
+                                testLogIn();
+                            }}
+                            className={styles.login_demo_button}>
                             テスト用ユーザーでログイン
                         </div>
                     </div>

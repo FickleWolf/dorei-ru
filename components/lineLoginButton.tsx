@@ -1,34 +1,31 @@
-import Link from 'next/link'
+import { useState } from 'react';
 import styles from "../styles/Style.module.css";
 import Image from "next/image";
 
 export default function LineLoginButton() {
-    const authUrl = {
-        pathname: process.env.NEXT_PUBLIC_LINE_LOGIN_AUTHPAGE_BASEURL,
-        query: {
-            response_type: "code",
-            client_id: process.env.NEXT_PUBLIC_LINE_LOGIN_CHANNEL_ID,
-            redirect_uri: process.env.NEXT_PUBLIC_LINE_LOGIN_REDIRECTURL,
-            state: "ssss",
-            scope: "profile openid",
-            bot_prompt: "aggressive",
-            initial_amr_display: "lineqr"
-        }
+  const [authUrl, setAuthUrl] = useState(null);
+
+  const handleLoginClick = async () => {
+    try {
+      const response = await fetch('/api/auth/getLineAuthUrl');
+      const data = await response.json();
+      setAuthUrl(data.url);
+      window.location.href = data.url;
+    } catch (error) {
+      console.error('Failed to fetch LINE login URL:', error);
     }
+  };
 
-    return (
-        <Link
-            href={authUrl}
-            className={styles.login_button}>
-            <Image
-                alt="line_icon_img"
-                width={30}
-                height={30}
-                src={`https://ficklewolf.com/dorei-ru/image/LINE-icon.png`}
-                className={styles.login_button_icon}
-            />
-            <div className={styles.login_button_text}>Login/SignUp With LINE</div>
-        </Link>
-    );
+  return (
+    <button onClick={handleLoginClick} className={styles.login_button}>
+      <Image
+        alt="line_icon_img"
+        width={30}
+        height={30}
+        src={`https://ficklewolf.com/dorei-ru/image/LINE-icon.png`}
+        className={styles.login_button_icon}
+      />
+      <div className={styles.login_button_text}>Login/SignUp With LINE</div>
+    </button>
+  );
 }
-

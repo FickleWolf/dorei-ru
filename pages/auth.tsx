@@ -1,17 +1,17 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import initializeFirebaseClient from "../lib/initFirebase";
+import initFirebase from "../lib/initFirebase";
 import { signInWithCustomToken } from "firebase/auth";
 
 export default function Auth() {
     const router = useRouter();
-    const { code } = router.query;
     const sleep = (ms: number) => new Promise(res => setTimeout(res, ms));
+    const { code, state } = router.query;
     const [message, setMessage] = useState<string>("認証中です。");
 
-    const getCustomToken = async (code: string) => {
+    const getCustomToken = async (code: string, state: string) => {
         try {
-            const response = await fetch(`/api/auth/signInWithLine?code=${code}`);
+            const response = await fetch(`/api/auth/signInWithLine?code=${code}&state=${state}`);
             const res = await response.json();
             const statusCode = response.status;
 
@@ -33,11 +33,11 @@ export default function Auth() {
     };
 
     const logIn = async (customToken: string) => {
-        const { auth } = initializeFirebaseClient();
+        const { auth } = initFirebase();
         try {
             await signInWithCustomToken(auth, customToken);
             setMessage("サインインに成功しました。リダイレクトしています...");
-            router.push('/'); 
+            router.push('/');
         } catch (error) {
             setMessage("サインイン時にエラーが発生しました。\n一定時間後にホームへ遷移します。");
             await sleep(5000);
@@ -46,10 +46,10 @@ export default function Auth() {
     };
 
     useEffect(() => {
-        if (code) {
-            getCustomToken(code as string);
+        if (code && state) {
+            getCustomToken(code as string, state as string);
         }
-    }, [code]);
+    }, [code, state]);
 
     return (
         <div>
