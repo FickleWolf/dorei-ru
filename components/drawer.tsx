@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "../styles/Style.module.css";
 import initFirebase from "../lib/initFirebase";
-import Loading from "./loading"; // Loadingコンポーネントをインポート
+import Loading from "./loading"; 
 import { useAuth } from "../lib/provider/AuthProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
