@@ -618,7 +618,7 @@ ul.event_content_item_text {
 
 .section_event_purchase {
     align-items: center;
-    background-color: #ffffff;
+    background-color: #fff;
     border-bottom: 1px solid #dddddd;
     border-top: 1px solid #dddddd;
     bottom: 0;
@@ -626,7 +626,7 @@ ul.event_content_item_text {
     flex-direction: column;
     padding: 16px;
     position: sticky;
-    row-gap: 8px;
+    row-gap: 12px;
 }
 
 .event_purchase_note {
@@ -637,10 +637,12 @@ ul.event_content_item_text {
     text-align: center;
 }
 
-.event_purchase_button {
+.event_purchase_button,
+.event_purchase_button__disable {
     align-items: center;
     background-color: #dc395f;
     border-radius: 5px;
+    cursor: pointer;
     color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -650,6 +652,17 @@ ul.event_content_item_text {
     justify-content: center;
     letter-spacing: 2px;
     width: 165px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.event_purchase_button__disable {
+    cursor: not-allowed;
+    background-color: rgba(220, 57, 95, 0.5);
+}
+
+.event_purchase_button:hover {
+    background-color: #f6f6f6;
+    color: #dc395f;
 }
 
 .drawer {

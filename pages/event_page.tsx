@@ -39,7 +39,8 @@ export default function EventPage({ event }: { event: any }) {
     const [displayImg, setDisplayImg] = useState<string | undefined>("");
     const [isLoad, setIsLoad] = useState<boolean>(true);
     const { loading: platformSettingLoading } = usePlatformSetting();
-    const { loading: authLoading } = useAuth();
+    const { user, loading: authLoading } = useAuth();
+    const [showOrder, setShowOrder] = useState<boolean>(false);
 
     function formatUnixTime(unix: number) {
         const dateTime = new Date(unix * 1000);
@@ -49,6 +50,11 @@ export default function EventPage({ event }: { event: any }) {
             }日 ${dateTime.getHours() < 10 ? 0 + String(dateTime.getHours()) : dateTime.getHours()
             }時${dateTime.getMinutes() < 10 ? 0 + String(dateTime.getMinutes()) : dateTime.getMinutes()
             }分`);
+    }
+
+    function purchaseButton() {
+        if (!user) return;
+        setShowOrder(true);
     }
 
     useEffect(() => {
@@ -81,7 +87,6 @@ export default function EventPage({ event }: { event: any }) {
                                                     className={img == displayImg ?
                                                         styles.event_img_selector_item_selected
                                                         : styles.event_img_selector_item
-
                                                     }
                                                     onClick={(e) => {
                                                         e.stopPropagation();
@@ -198,11 +203,18 @@ export default function EventPage({ event }: { event: any }) {
                             </div>
                         </div>
                         <div className={styles.section_event_purchase}>
-                            <div className={styles.event_purchase_note}>
-                                イベントを購入するには、ログインしている必要があります。
-                                <br />画面右上のボタンよりログイン・サインアップを行ってください。
-                            </div>
-                            <div className={styles.event_purchase_button}>
+                            {
+                                !user ? <div className={styles.event_purchase_note}>
+                                    イベントを購入するには、ログインしている必要があります。
+                                    <br />画面右上のボタンよりログイン・サインアップを行ってください。
+                                </div> : null
+                            }
+                            <div
+                                className={user ? styles.event_purchase_button : styles.event_purchase_button__disable}
+                                onClick={() => {
+                                    purchaseButton();
+                                }}
+                            >
                                 イベント購入
                             </div>
                         </div>
